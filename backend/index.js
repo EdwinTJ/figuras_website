@@ -31,8 +31,12 @@ app.use(cors());
 
 // IMPORT ROUTES
 const productRoutes = require("./routes/productRoutes");
+const collectionRoutes = require("./routes/collectionRoute");
+const authRoutes = require("./routes/authRoute");
 // ROUTES MIDDLEWARE
 app.use("/api", productRoutes);
+app.use("/api", collectionRoutes);
+app.use("/api", authRoutes);
 
 app.listen(port, () => {
   console.log(`App is running on port ${port}`);
