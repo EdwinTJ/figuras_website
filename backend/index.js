@@ -9,13 +9,13 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 // CONNECT DATABASE
-mongoose
-  .connect(process.env.DATABASE, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => console.log("DB connected"))
-  .catch(err => console.log(err));
+// mongoose
+//   .connect(process.env.DATABASE, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true
+//   })
+//   .then(() => console.log("DB connected"))
+//   .catch(err => console.log(err));
 
 // MIDDLEWARE
 app.use(bodyParser.json({ limit: "100mb" }));
@@ -28,6 +28,11 @@ app.use(
 );
 app.use(cookieParser());
 app.use(cors());
+
+// IMPORT ROUTES
+const productRoutes = require("./routes/productRoutes");
+// ROUTES MIDDLEWARE
+app.use("/api", productRoutes);
 
 app.listen(port, () => {
   console.log(`App is running on port ${port}`);
