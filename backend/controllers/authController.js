@@ -1,3 +1,5 @@
+const User = require("../models/user");
+const HttpError = require("../middleware/http-error");
 const USER_DUMMY = [
   {
     id: 1,
@@ -20,17 +22,20 @@ exports.getUsers = async (req, res, next) => {
 //Create a user (signup)
 exports.signup = async (req, res, next) => {
   const { name, email, password, role } = req.body;
-  const newUser = {
-    name,
-    email,
-    password,
-    role
-  };
+  const userExists = await User.findOne({ email });
+  if (userExists) {
+    return next(new HttpError("User already exists", 400));
+  }
   try {
-    const user = await USER_DUMMY.push(newUser);
+    const user = await User.create({
+      name,
+      email,
+      password,
+      role
+    });
     res.status(201).json({ success: true, user });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return next(new HttpError("Something went wrong, please try again", 500));
   }
 };
 
