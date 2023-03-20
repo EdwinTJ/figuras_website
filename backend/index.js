@@ -4,7 +4,14 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const errorHandler = require("./middleware/error");
 const app = express();
+
+// IMPORT ROUTES
+
+const productRoutes = require("./routes/productRoutes");
+const collectionRoutes = require("./routes/collectionRoute");
+const authRoutes = require("./routes/authRoute");
 
 const port = process.env.PORT || 8000;
 
@@ -29,15 +36,13 @@ app.use(
 app.use(cookieParser());
 app.use(cors());
 
-// IMPORT ROUTES
-const productRoutes = require("./routes/productRoutes");
-const collectionRoutes = require("./routes/collectionRoute");
-const authRoutes = require("./routes/authRoute");
 // ROUTES MIDDLEWARE
 app.use("/api", productRoutes);
 app.use("/api", collectionRoutes);
 app.use("/api", authRoutes);
 
+//ERROR MIDDLEWARE
+app.use(errorHandler);
 app.listen(port, () => {
   console.log(`App is running on port ${port}`);
 });

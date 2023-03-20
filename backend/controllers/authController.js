@@ -13,7 +13,8 @@ const USER_DUMMY = [
 //Get all users
 exports.getUsers = async (req, res, next) => {
   try {
-    res.status(200).json({ success: true, USER_DUMMY });
+    const users = await User.find({});
+    res.status(200).json({ success: true, users });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -24,7 +25,9 @@ exports.signup = async (req, res, next) => {
   const { name, email, password, role } = req.body;
   const userExists = await User.findOne({ email });
   if (userExists) {
-    return next(new HttpError("User already exists", 400));
+    return next(
+      new HttpError("User already exists,please provide another email", 400)
+    );
   }
   try {
     const user = await User.create({
@@ -41,46 +44,73 @@ exports.signup = async (req, res, next) => {
 
 //Login a user
 exports.login = async (req, res, next) => {
-  const { email, password } = req.body;
   try {
-    const user = USER_DUMMY.find(p => p.email === email);
-    if (user.password === password) {
-      res.status(200).json({ success: true, user });
-    } else {
-      res.status(401).json({ message: "Invalid credentials" });
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return next(new HttpError("E-mail and password are required", 400));
     }
+
+    // check user e-mail
+    const user = await User.findOne({ email });
+    if (!user) {
+      return next(new HttpError("Invalid credentials", 400));
+    }
+
+    // verify user password
+    const isMatched = await user.comparePassword(password);
+    if (!isMatched) {
+      return next(new HttpError("Invalid credentials", 400));
+    }
+
+    generateToken(user, 200, res);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.log(error);
+
+    next(new HttpError("Cannot log in, check your credentials", 400));
   }
+};
+
+const generateToken = async (user, statusCode, res) => {
+  const token = await user.jwtGenerateToken();
+
+  const options = {
+    expires: new Date(new Date().getTime() + 5 * 60 * 1000),
+    httpOnly: true
+  };
+
+  res
+    .status(statusCode)
+    .cookie("token", token, { ...options, secure: false })
+    .json({ success: true, token });
 };
 
 //Logout a user
 exports.logout = async (req, res, next) => {
-  try {
-    res.status(200).json({ success: true, message: "Logged out" });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+  res.clearCookie("token");
+  res.status(200).json({
+    success: true,
+    message: "Logged out"
+  });
 };
 
 //Get a single user
 exports.getSingleUser = async (req, res, next) => {
   const { userId } = req.params;
+  console.log("userId", userId);
   try {
-    const user = USER_DUMMY.find(p => p.id === userId);
+    const user = await User.findById(userId);
     res.status(200).json({ success: true, user });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return next(new HttpError("Something went wrong, please try again", 500));
   }
 };
 //Delete a user
 exports.deleteUser = async (req, res, next) => {
   const { userId } = req.params;
   try {
-    // const user = USER_DUMMY.find(p => p.id === userId);
-    // USER_DUMMY.splice(user, 1);
-    res.status(200).json({ success: true, userId });
+    await User.findByIdAndDelete(userId);
+    res.status(200).json({ success: true, message: "User deleted" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return next(new HttpError("Something went wrong, please try again", 500));
   }
 };
