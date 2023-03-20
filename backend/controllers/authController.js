@@ -1,15 +1,6 @@
 const User = require("../models/user");
 const HttpError = require("../middleware/http-error");
-const USER_DUMMY = [
-  {
-    id: 1,
-    name: "John Doe",
-    email: "email@test.com",
-    password: "123456",
-    role: "admin"
-  }
-];
-
+const { validationResult } = require("express-validator");
 //Get all users
 exports.getUsers = async (req, res, next) => {
   try {
@@ -22,11 +13,15 @@ exports.getUsers = async (req, res, next) => {
 
 //Create a user (signup)
 exports.signup = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   const { name, email, password, role } = req.body;
   const userExists = await User.findOne({ email });
   if (userExists) {
     return next(
-      new HttpError("User already exists,please provide another email", 400)
+      new HttpError("Email already exists,please provide another email", 400)
     );
   }
   try {
@@ -44,6 +39,10 @@ exports.signup = async (req, res, next) => {
 
 //Login a user
 exports.login = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   try {
     const { email, password } = req.body;
     if (!email || !password) {
