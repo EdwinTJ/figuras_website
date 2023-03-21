@@ -10,7 +10,7 @@ const app = express();
 // IMPORT ROUTES
 
 const productRoutes = require("./routes/productRoutes");
-const collectionRoutes = require("./routes/collectionRoute");
+const categoryRoute = require("./routes/categoryRoute");
 const authRoutes = require("./routes/authRoute");
 
 const port = process.env.PORT || 8000;
@@ -38,7 +38,7 @@ app.use(cors());
 
 // ROUTES MIDDLEWARE
 app.use("/api", productRoutes);
-app.use("/api", collectionRoutes);
+app.use("/api", categoryRoute);
 app.use("/api", authRoutes);
 
 //ERROR MIDDLEWARE

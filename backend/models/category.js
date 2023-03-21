@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const collectionSchema = new mongoose.Schema({
+const categorySchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Please add a Name"],
@@ -10,4 +10,4 @@ const collectionSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model("Collection", collectionSchema);
+module.exports = mongoose.model("Category", categorySchema);

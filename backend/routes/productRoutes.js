@@ -4,7 +4,7 @@ const {
   getProducts,
   getProductsById,
   getProductsByUser,
-  getProductsByCollection,
+  getProductsByCategory,
   createProduct,
   updateProduct,
   deleteProduct
@@ -13,7 +13,7 @@ const {
 router.get("/product", getProducts);
 router.get("/product/:productId", getProductsById);
 router.get("/product/user/:userId", getProductsByUser);
-router.get("/product/collection/:collectionId", getProductsByCollection);
+router.get("/product/collection/:collectionId", getProductsByCategory);
 router.post("/product", createProduct);
 router.put("/product/:productId", updateProduct);
 router.delete("/product/:productId", deleteProduct);

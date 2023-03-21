@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const {
-  getCollection,
-  createCollection,
-  updateCollection,
-  deleteCollection
-} = require("../controllers/collectionController");
+  getCategory,
+  createCategory,
+  updateCategory,
+  deleteCategory
+} = require("../controllers/categoryController");
 const { check } = require("express-validator");
-router.get("/collection", getCollection);
+router.get("/category", getCategory);
 router.post(
-  "/collection",
+  "/category",
   [
     check("name", "Name is required")
       .not()
@@ -20,10 +20,10 @@ router.post(
       .isLength({ max: 32 })
       .withMessage("Name must have at most thirty-two(32) characters")
   ],
-  createCollection
+  createCategory
 );
 router.put(
-  "/collection/:collectionId",
+  "/category/:categoryId",
   [
     check("name", "Name is required")
       .not()
@@ -34,8 +34,8 @@ router.put(
       .isLength({ max: 32 })
       .withMessage("Name must have at most thirty-two(32) characters")
   ],
-  updateCollection
+  updateCategory
 );
-router.delete("/collection/:collectionId", deleteCollection);
+router.delete("/category/:categoryId", deleteCategory);
 
 module.exports = router;
