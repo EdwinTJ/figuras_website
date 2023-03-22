@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const HttpError = require("../middleware/http-error");
 const { validationResult } = require("express-validator");
+
 //Get all users
 exports.getUsers = async (req, res, next) => {
   try {
@@ -95,7 +96,6 @@ exports.logout = async (req, res, next) => {
 //Get a single user
 exports.getSingleUser = async (req, res, next) => {
   const { userId } = req.params;
-  console.log("userId", userId);
   try {
     const user = await User.findById(userId);
     res.status(200).json({ success: true, user });
@@ -103,6 +103,7 @@ exports.getSingleUser = async (req, res, next) => {
     return next(new HttpError("Something went wrong, please try again", 500));
   }
 };
+
 //Delete a user
 exports.deleteUser = async (req, res, next) => {
   const { userId } = req.params;

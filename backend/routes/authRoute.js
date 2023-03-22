@@ -9,8 +9,13 @@ const {
   deleteUser
 } = require("../controllers/authController");
 const { check } = require("express-validator");
+
 router.get("/user", getUsers);
+
+router.get("/user/logout", logout);
+
 router.get("/user/:userId", getSingleUser);
+
 router.post(
   "/user",
   [
@@ -43,7 +48,6 @@ router.post(
   ],
   login
 );
-router.post("/user/logout", logout);
 router.delete("/user/:userId", deleteUser);
 
 module.exports = router;
