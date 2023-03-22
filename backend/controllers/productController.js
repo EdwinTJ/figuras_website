@@ -1,3 +1,5 @@
+const Product = require("../models/product");
+const Category = require("../models/category");
 const DUMMY_PRODUCTS = [
   {
     id: "p1",
@@ -24,62 +26,41 @@ const DUMMY_PRODUCTS = [
     user: "u2"
   }
 ];
-//Display all products
+
+exports.createProduct = async (req, res, next) => {
+  const { name, description, price, image, category, creator } = req.body;
+
+  try {
+    const product = await Product.create({
+      name,
+      description,
+      price,
+      image,
+      category,
+      creator
+    });
+    res.status(201).json({
+      success: true,
+      product
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 exports.getProducts = async (req, res, next) => {
   try {
-    res.status(200).json({ success: true, products: DUMMY_PRODUCTS });
+    const products = await Product.find()
+      .populate("category", "name")
+      .populate("creator", "name");
+    res.status(201).json({
+      success: true,
+      products
+    });
   } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-//Display a single product
-exports.getProductsById = async (req, res, next) => {
-  const { productId } = req.params;
-  try {
-    const userList = DUMMY_PRODUCTS.find(p => p.id === productId);
-    res.status(200).json({ success: true, userList });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-//Display all products by a user
-exports.getProductsByUser = async (req, res, next) => {
-  const { userId } = req.params;
-  try {
-    const products = DUMMY_PRODUCTS.filter(p => p.user === userId);
-    res.status(200).json({ success: true, products });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-//Display all products by a collection
-exports.getProductsByCollection = async (req, res, next) => {
-  const { collectionId } = req.params;
-  try {
-    const products = DUMMY_PRODUCTS.filter(p => p.collection === collectionId);
-    res.status(200).json({ success: true, products });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-//Create a new product
-exports.createProduct = async (req, res, next) => {
-  const { name, description, price, img, collection, user } = req.body;
-  const newProduct = {
-    name,
-    description,
-    price,
-    img,
-    collection,
-    user
-  };
-  try {
-    const product = await DUMMY_PRODUCTS.push(newProduct);
-    res.status(201).json({ success: true, product });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.log(error);
+    next(error);
   }
 };
 
