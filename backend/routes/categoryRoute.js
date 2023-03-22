@@ -7,6 +7,7 @@ const {
   deleteCategory
 } = require("../controllers/categoryController");
 const { check } = require("express-validator");
+
 router.get("/category", getCategory);
 router.post(
   "/category",
