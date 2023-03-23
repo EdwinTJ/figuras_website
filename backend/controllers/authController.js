@@ -30,6 +30,7 @@ exports.signup = async (req, res, next) => {
       name,
       email,
       password,
+      products: [],
       role
     });
     res.status(201).json({ success: true, user });

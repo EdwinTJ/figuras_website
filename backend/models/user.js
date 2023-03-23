@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -23,6 +24,13 @@ const userSchema = mongoose.Schema({
       "Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and a special characters"
     ]
   },
+  products: [
+    {
+      type: ObjectId,
+      ref: "Product",
+      required: [true, "Product must have a creator"]
+    }
+  ],
   role: { type: Number, default: 0 }
 });
 

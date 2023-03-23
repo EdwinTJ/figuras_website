@@ -1,4 +1,5 @@
 const Product = require("../models/product");
+const User = require("../models/user");
 const HttpError = require("../middleware/http-error");
 
 //Create a product
@@ -14,6 +15,14 @@ exports.createProduct = async (req, res, next) => {
       category,
       creator
     });
+
+    // Add product to user
+    await User.findById({ _id: creator })
+      .select("+products")
+      .then(user => {
+        user.products.push(product);
+        user.save({ validateBeforeSave: false });
+      });
     res.status(201).json({
       success: true,
       product
@@ -69,5 +78,31 @@ exports.deleteProduct = async (req, res, next) => {
     res.status(200).json({ success: true, message: "Product deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+// Get Products by User
+exports.getProductsByUser = async (req, res, next) => {
+  const { userId } = req.params;
+
+  let userWithProducts;
+  try {
+    const userWithProducts = await User.findById(userId).populate(
+      "products",
+      "name description price image category"
+    );
+    console.log(userWithProducts);
+    if (!userWithProducts || userWithProducts.products.length === 0) {
+      return next(
+        new HttpError("Could not find products for the provided user id", 404)
+      );
+    }
+    res.json({
+      products: userWithProducts.products.map(product => product.toObject())
+    });
+  } catch (error) {
+    return next(
+      new HttpError("Fetcing Product went wrong, please try again", 500)
+    );
   }
 };

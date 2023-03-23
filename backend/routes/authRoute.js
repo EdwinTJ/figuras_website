@@ -15,7 +15,6 @@ router.get("/user", getUsers);
 router.get("/user/logout", logout);
 
 router.get("/user/:userId", getSingleUser);
-
 router.post(
   "/user",
   [
