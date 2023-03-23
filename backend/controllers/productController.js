@@ -1,32 +1,7 @@
 const Product = require("../models/product");
-const Category = require("../models/category");
-const DUMMY_PRODUCTS = [
-  {
-    id: "p1",
-    name: "Sushi",
-    description: "Finest fish and veggies",
-    price: 22.99,
-    img: {
-      public_url: "https://res.cloudinary.com/dzqkqzjxw/image/upload/v1621361",
-      url: "https://res.cloudinary.com/dzqkqzjxw/image/upload/v1621361"
-    },
-    collection: "c1",
-    user: "u1"
-  },
-  {
-    id: "p2",
-    name: "Pizza",
-    description: "Finest fish and veggies",
-    price: 22.99,
-    img: {
-      public_url: "https://res.cloudinary.com/dzqkqzjxw/image/upload/v1621361",
-      url: "https://res.cloudinary.com/dzqkqzjxw/image/upload/v1621361"
-    },
-    collection: "c2",
-    user: "u2"
-  }
-];
+const HttpError = require("../middleware/http-error");
 
+//Create a product
 exports.createProduct = async (req, res, next) => {
   const { name, description, price, image, category, creator } = req.body;
 
@@ -49,6 +24,7 @@ exports.createProduct = async (req, res, next) => {
   }
 };
 
+//Get a single product
 exports.getProducts = async (req, res, next) => {
   try {
     const products = await Product.find()
@@ -67,36 +43,30 @@ exports.getProducts = async (req, res, next) => {
 //Update a product
 exports.updateProduct = async (req, res, next) => {
   const { productId } = req.params;
-  const { name, description, price, img, collection, user } = req.body;
+  const { name, description, price, image, category } = req.body;
   const updatedProduct = {
     name,
     description,
     price,
-    img,
-    collection,
-    user
+    image,
+    category
   };
   try {
-    const product = DUMMY_PRODUCTS.find(p => p.id === productId);
-    product.name = updatedProduct.name;
-    product.description = updatedProduct.description;
-    product.price = updatedProduct.price;
-    product.img = updatedProduct.img;
-    product.collection = updatedProduct.collection;
-    product.user = updatedProduct.user;
-    res.status(200).json({ success: true, product });
+    await Product.findByIdAndUpdate({ _id: productId }, updatedProduct);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return next(
+      new HttpError("Updating product went wrong, please try again", 500)
+    );
   }
-  res.status(200).json({ success: true, message: "Update product" });
+  res.status(200).json({ success: true, updatedProduct });
 };
 
 //Delete a product
 exports.deleteProduct = async (req, res, next) => {
   const { productId } = req.params;
   try {
-    const product = DUMMY_PRODUCTS.filter(p => p.id !== productId);
-    res.status(200).json({ success: true, product });
+    await Product.findByIdAndDelete({ _id: productId });
+    res.status(200).json({ success: true, message: "Product deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
