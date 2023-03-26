@@ -1,6 +1,5 @@
 import React from "react";
 import ATProwhite from "./assets/AT-pro-white.png";
-import tuat from "./assets/tuat.jpg";
 import {
   MDBDropdown,
   MDBDropdownMenu,
@@ -25,24 +24,31 @@ export default function Navbar() {
         <ul className="navbar-nav nav-right">
           <li className="nav-item avt-wrapper">
             <MDBDropdown>
-              <MDBDropdownToggle tag="a" className="btn btn-primary">
+              <MDBDropdownToggle className="btn btn-primary">
                 User
               </MDBDropdownToggle>
               <MDBDropdownMenu>
                 <MDBDropdownItem link>
                   {" "}
-                  <i class="fas fa-user-tie"></i>
-                  <span>Profile</span>
+                  <a>
+                    <i class="fas fa-user-tie"></i>
+                    <span>Profile</span>
+                  </a>
                 </MDBDropdownItem>
                 <MDBDropdownItem link>
                   {" "}
-                  <i class="fas fa-cog"></i>
-                  <span>Settings</span>
+                  <a>
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                  </a>
                 </MDBDropdownItem>
                 <MDBDropdownItem link>
                   {" "}
-                  <i class="fas fa-sign-out-alt"></i>
-                  <span>Logout</span>
+                  <a>
+                    {" "}
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                  </a>
                 </MDBDropdownItem>
               </MDBDropdownMenu>
             </MDBDropdown>

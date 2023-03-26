@@ -1,5 +1,6 @@
 const Product = require("../models/product");
 const User = require("../models/user");
+const Category = require("../models/category");
 const HttpError = require("../middleware/http-error");
 
 //Create a product
@@ -35,13 +36,34 @@ exports.createProduct = async (req, res, next) => {
 
 //Get a single product
 exports.getProducts = async (req, res, next) => {
+  //enable pagination
+  const pageSize = 6;
+  const page = Number(req.query.pageNumber) || 1;
+  const count = await Product.find({}).estimatedDocumentCount();
+
+  //all categories ids
+  let ids = [];
+  const categ = await Category.find({}, { _id: 1 });
+  categ.forEach(cat => {
+    ids.push(cat._id);
+  });
+
+  //filter
+  let cat = req.query.cat;
+  let query = cat !== "" ? cat : ids;
+
   try {
-    const products = await Product.find()
+    const products = await Product.find({ category: query })
       .populate("category", "name")
-      .populate("creator", "name");
+      .populate("creator", "name")
+      .skip(pageSize * (page - 1))
+      .limit(pageSize);
     res.status(201).json({
       success: true,
-      products
+      products,
+      page,
+      pages: Math.ceil(count / pageSize),
+      count
     });
   } catch (error) {
     console.log(error);
@@ -104,5 +126,19 @@ exports.getProductsByUser = async (req, res, next) => {
     return next(
       new HttpError("Fetcing Product went wrong, please try again", 500)
     );
+  }
+};
+
+// display category
+exports.productCategory = async (req, res, next) => {
+  try {
+    const cat = await Product.find().populate("category", "name");
+    res.status(201).json({
+      success: true,
+      cat
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
   }
 };

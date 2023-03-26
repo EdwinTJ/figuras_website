@@ -8,25 +8,24 @@ import {
   MDBCol,
   MDBCardLink
 } from "mdb-react-ui-kit";
-export default function Card(props) {
-  const admin = props.isAdmin;
+export default function Card({ isAdmin, image, name, price }) {
   return (
     <MDBCol>
       <MDBCard className="h-100">
         <MDBCardImage
-          src="https://mdbootstrap.com/img/new/standard/city/041.webp"
+          src={image || "https://picsum.photos/200"}
           alt="..."
           position="top"
         />
         <MDBCardBody>
-          <MDBCardTitle className="text-center">Name</MDBCardTitle>
-          <MDBCardText className="text-center">$ Price</MDBCardText>
-          {admin && (
+          <MDBCardTitle className="text-center">{name}</MDBCardTitle>
+          <MDBCardText className="text-center">${price}</MDBCardText>
+          {isAdmin && (
             <MDBCardLink href="#" className="text-center">
               Edit
             </MDBCardLink>
           )}
-          {admin && (
+          {isAdmin && (
             <MDBCardLink href="#" className="text-center">
               Delete
             </MDBCardLink>

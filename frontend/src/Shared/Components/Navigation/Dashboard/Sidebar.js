@@ -1,11 +1,10 @@
 import React from "react";
-
-export default function Sidebar() {
+export default function Sidebar({ history }) {
   return (
     <div className="sidebar">
       <ul className="sidebar-nav">
         <li className="sidebar-nav-item">
-          <a href="#" className="sidebar-nav-link">
+          <a href="/admin" className="sidebar-nav-link">
             <div>
               <i className="fas fa-tachometer-alt"></i>
             </div>
@@ -13,7 +12,7 @@ export default function Sidebar() {
           </a>
         </li>
         <li className="sidebar-nav-item">
-          <a href="#" className="sidebar-nav-link">
+          <a href="/admin/product" className="sidebar-nav-link">
             <div>
               <i className="fab fa-accusoft"></i>
             </div>

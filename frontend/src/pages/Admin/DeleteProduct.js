@@ -1,16 +1,19 @@
 import React from "react";
-
+import Navbar from "../../Shared/Components/Navigation/Dashboard/Navbar";
+import Sidebar from "../../Shared/Components/Navigation/Dashboard/Sidebar";
 import { MDBContainer, MDBRow, MDBInputGroup, MDBBtn } from "mdb-react-ui-kit";
 
 export default function CreateProduct() {
   return (
     <>
+      <Navbar />
+      <Sidebar />
       <MDBContainer>
         <MDBRow
           className="row-cols-1 row-cols-md-3 g-4"
           style={{ marginTop: "60px", marginBottom: "20px" }}
         >
-          <h1>Create Product</h1>
+          <h1>Delete Product</h1>
         </MDBRow>
         <MDBRow
           className="row-cols-1 row-cols-md-3 g-4"

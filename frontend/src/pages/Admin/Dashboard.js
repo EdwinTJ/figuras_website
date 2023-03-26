@@ -1,14 +1,19 @@
 import React from "react";
-import "./Styles.css";
-import Navbar from "../../Shared/Components/Navigation/Dashboard/Navbar";
-import Sidebar from "../../Shared/Components/Navigation/Dashboard/Sidebar";
+
 import Table from "../../Shared/Components/UIElements/Table";
+import { MDBRow, MDBContainer, MDBBtn } from "mdb-react-ui-kit";
+
 export default function Dashboard() {
   return (
     <>
-      <Navbar />
-      <Sidebar />
-      <Table />
+      <MDBContainer>
+        <MDBRow
+          className="row-cols-1 row-cols-md-3 g-4"
+          style={{ marginTop: "60px", marginBottom: "20px" }}
+        >
+          <Table />
+        </MDBRow>
+      </MDBContainer>
     </>
   );
 }

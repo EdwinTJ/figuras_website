@@ -2,7 +2,7 @@ import React from "react";
 
 import { MDBContainer, MDBRow, MDBInputGroup, MDBBtn } from "mdb-react-ui-kit";
 
-export default function CreateProduct() {
+export default function EditProduct() {
   return (
     <>
       <MDBContainer>
@@ -10,7 +10,7 @@ export default function CreateProduct() {
           className="row-cols-1 row-cols-md-3 g-4"
           style={{ marginTop: "60px", marginBottom: "20px" }}
         >
-          <h1>Create Product</h1>
+          <h1>Edit Product</h1>
         </MDBRow>
         <MDBRow
           className="row-cols-1 row-cols-md-3 g-4"
