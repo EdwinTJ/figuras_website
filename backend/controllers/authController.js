@@ -6,6 +6,7 @@ const { validationResult } = require("express-validator");
 exports.getUsers = async (req, res, next) => {
   try {
     const users = await User.find({});
+
     res.status(200).json({ success: true, users });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -99,7 +100,8 @@ exports.getSingleUser = async (req, res, next) => {
   const { userId } = req.params;
   try {
     const user = await User.findById(userId);
-    res.status(200).json({ success: true, user });
+    const productLength = user.products.length;
+    res.status(200).json({ success: true, user, productLength });
   } catch (error) {
     return next(new HttpError("Something went wrong, please try again", 500));
   }
