@@ -7,7 +7,7 @@ export default function Footer() {
       className="text-center"
       color="white"
       bgColor="dark"
-      style={{ marginTop: "10px" }}
+      style={{ marginTop: "80px" }}
     >
       <MDBContainer className="p-4">
         <section className="mb-4">

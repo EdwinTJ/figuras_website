@@ -10,7 +10,6 @@ import {
   MDBNavbarBrand,
   MDBCollapse
 } from "mdb-react-ui-kit";
-
 export default function Navbar() {
   const [showNavColorSecond, setShowNavColorSecond] = useState(false);
 
@@ -31,15 +30,12 @@ export default function Navbar() {
         <MDBCollapse show={showNavColorSecond} navbar id="navbarColor02">
           <MDBNavbarNav className="me-auto mb-2 mb-lg-0">
             <MDBNavbarItem className="active">
-              <MDBNavbarLink aria-current="page" href="#">
+              <MDBNavbarLink aria-current="page" href="/home">
                 Home
               </MDBNavbarLink>
             </MDBNavbarItem>
             <MDBNavbarItem>
-              <MDBNavbarLink href="#">Features</MDBNavbarLink>
-            </MDBNavbarItem>
-            <MDBNavbarItem>
-              <MDBNavbarLink href="#">Pricing</MDBNavbarLink>
+              <MDBNavbarLink href="/detail/:id">Detail</MDBNavbarLink>
             </MDBNavbarItem>
             <MDBNavbarItem>
               <MDBNavbarLink href="#">About</MDBNavbarLink>
