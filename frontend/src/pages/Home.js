@@ -95,6 +95,7 @@ export default function Home() {
           {products &&
             products.map(p => (
               <Card
+                key={p._id}
                 image={p.image || "https://via.placeholder.com/150"}
                 name={p.name}
                 price={p.price}
@@ -103,7 +104,7 @@ export default function Home() {
             ))}
         </MDBRow>
         <Pagination
-          style={{ float: "right", margin: "5px" }}
+          style={{ float: "right", marginTop: "5px", marginBottom: "500px" }}
           current={pageNumber}
           total={count}
           onChange={prev => setPageNumber(prev)}
