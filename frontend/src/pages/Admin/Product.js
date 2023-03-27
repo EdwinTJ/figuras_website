@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Card from "../Shared/Components/UIElements/Card";
 import { MDBRow, MDBContainer, MDBBtn } from "mdb-react-ui-kit";
+import Card from "../../Shared/Components/UIElements/Card";
 import axios from "axios";
 import { Pagination } from "antd";
-
-export default function Home() {
+export default function Product() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState("");
@@ -95,7 +94,6 @@ export default function Home() {
           {products &&
             products.map(p => (
               <Card
-                key={p._id}
                 image={p.image || "https://via.placeholder.com/150"}
                 name={p.name}
                 price={p.price}
@@ -104,7 +102,7 @@ export default function Home() {
             ))}
         </MDBRow>
         <Pagination
-          style={{ float: "right", marginTop: "5px", marginBottom: "500px" }}
+          style={{ float: "right", margin: "5px" }}
           current={pageNumber}
           total={count}
           onChange={prev => setPageNumber(prev)}
