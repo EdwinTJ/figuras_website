@@ -8,7 +8,8 @@ import {
   MDBCol,
   MDBCardLink
 } from "mdb-react-ui-kit";
-export default function Card({ isAdmin, image, name, price }) {
+import { Link } from "react-router-dom";
+export default function Card({ id, isAdmin, image, name, price }) {
   return (
     <MDBCol>
       <MDBCard className="h-100">
@@ -21,14 +22,14 @@ export default function Card({ isAdmin, image, name, price }) {
           <MDBCardTitle className="text-center">{name}</MDBCardTitle>
           <MDBCardText className="text-center">${price}</MDBCardText>
           {isAdmin && (
-            <MDBCardLink href="#" className="text-center">
+            <Link to={`/admin/product/edit/${id}`} className="text-center">
               Edit
-            </MDBCardLink>
+            </Link>
           )}
           {isAdmin && (
-            <MDBCardLink href="#" className="text-center">
-              Delete
-            </MDBCardLink>
+            <Link to={`/admin/product/edit/${id}`} className="text-center">
+              {"    "}Delete
+            </Link>
           )}
         </MDBCardBody>
       </MDBCard>
