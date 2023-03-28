@@ -16,7 +16,6 @@ export default function Product() {
         `http://localhost:8000/api/product?cat=${category}&pageNumber=${pageNumber}`
       )
       .then(prods => {
-        console.log("products", prods.data.products);
         setProducts(prods.data.products);
         setCount(prods.data.count);
       })
@@ -30,7 +29,6 @@ export default function Product() {
     axios
       .get("http://localhost:8000/api/category")
       .then(cat => {
-        console.log(cat.data.category);
         setCategories(cat.data.category);
       })
       .catch(error => {
@@ -45,8 +43,6 @@ export default function Product() {
   useEffect(() => {
     fetchProductCategory();
   }, []);
-
-  console.log(category);
 
   //filter product
   const filterProduct = e => {
@@ -94,6 +90,8 @@ export default function Product() {
           {products &&
             products.map(p => (
               <Card
+                key={p._id}
+                id={p._id}
                 image={p.image || "https://via.placeholder.com/150"}
                 name={p.name}
                 price={p.price}
