@@ -1,4 +1,4 @@
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./Shared/Utils/PrivateRoute";
 //Public Pages
 import Navbar from "./Shared/Components/Navigation/Navbar";
@@ -39,16 +39,20 @@ function App() {
 
 function Routing({ isAdmin }) {
   return (
-    <>
-      <Route exact path="/home" component={Home} />
-      <Route exact path="/detail/:id" component={Detail} />
+    <Routes>
+      <Route exact path="/home" element={<Home />} />
+      <Route exact path="/detail/:id" element={<Detail />} />
 
-      <Route exact path="/admin" component={Dashboard} isAdmin={isAdmin} />
-      <Route exact path="/admin/product" component={Product} />
-      <Route exact path="/admin/product/create" component={CreateProduct} />
-      <Route exact path="/admin/product/edit/:id" component={EditProduct} />
-      <Route exact path="/admin/product/delete/:id" component={DeleteProduct} />
-    </>
+      <Route exact path="/admin" element={<Dashboard />} isAdmin={isAdmin} />
+      <Route exact path="/admin/product" element={<Product />} />
+      <Route exact path="/admin/product/create" element={<CreateProduct />} />
+      <Route exact path="/admin/product/edit/:id" element={<EditProduct />} />
+      <Route
+        exact
+        path="/admin/product/delete/:id"
+        element={<DeleteProduct />}
+      />
+    </Routes>
   );
 }
 

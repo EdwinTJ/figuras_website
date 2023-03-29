@@ -1,31 +1,32 @@
 import React from "react";
+import { Link } from "react-router-dom";
 export default function Sidebar({ history }) {
   return (
     <div className="sidebar">
       <ul className="sidebar-nav">
         <li className="sidebar-nav-item">
-          <a href="/admin" className="sidebar-nav-link">
+          <Link to="/admin" className="sidebar-nav-link">
             <div>
               <i className="fas fa-tachometer-alt"></i>
             </div>
             <span>Dashboard</span>
-          </a>
+          </Link>
         </li>
         <li className="sidebar-nav-item">
-          <a href="/admin/product" className="sidebar-nav-link">
+          <Link to="/admin/product" className="sidebar-nav-link">
             <div>
               <i className="fab fa-accusoft"></i>
             </div>
             <span>Products</span>
-          </a>
+          </Link>
         </li>
         <li className="sidebar-nav-item">
-          <a href="#" className="sidebar-nav-link">
+          <Link to="/" className="sidebar-nav-link">
             <div>
               <i className="fas fa-tasks"></i>
             </div>
             <span>Sells</span>
-          </a>
+          </Link>
         </li>
       </ul>
     </div>
