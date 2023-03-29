@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { MDBContainer, MDBRow, MDBInputGroup, MDBBtn } from "mdb-react-ui-kit";
-
+import axios from "axios";
 export default function CreateProduct() {
+  const [categories, setCategories] = useState([]);
+  //fetch products category
+  const fetchProductCategory = () => {
+    axios
+      .get("http://localhost:8000/api/category")
+      .then(cat => {
+        console.log(cat.data.category);
+        setCategories(cat.data.category);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    fetchProductCategory();
+  }, []);
   return (
     <>
       <MDBContainer>
@@ -29,11 +46,22 @@ export default function CreateProduct() {
           </MDBInputGroup>
 
           <MDBInputGroup className="mb-3" textBefore="Category">
-            <select id="category" form="addProduct">
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="opel">Opel</option>
-              <option value="audi">Audi</option>
+            <select
+              id="category"
+              form="addProduct"
+              name=""
+              className="form-control"
+            >
+              <option value="Select" disabled>
+                Select
+              </option>
+              {categories &&
+                categories.map((cat, index) => (
+                  <option key={index} value={cat._id}>
+                    {cat.name}
+                  </option>
+                ))}
+              <option value="">All</option>
             </select>
           </MDBInputGroup>
 
