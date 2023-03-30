@@ -2,28 +2,37 @@ const Product = require("../models/product");
 const User = require("../models/user");
 const Category = require("../models/category");
 const HttpError = require("../middleware/http-error");
-
+const cloudinary = require("../util/cloudinary");
+const { currentUser } = require("../middleware/auth");
 //Create a product
 exports.createProduct = async (req, res, next) => {
   const { name, description, price, image, category, creator } = req.body;
 
   try {
+    const result = await cloudinary.uploader.upload(image, {
+      folder: "figuras"
+      // width: 300,
+      // crop: "scale"
+    });
     const product = await Product.create({
       name,
       description,
       price,
-      image,
-      category,
-      creator
+      image: {
+        public_id: result.public_id,
+        url: result.secure_url
+      },
+      category
+      // creator
     });
 
     // Add product to user
-    await User.findById({ _id: creator })
-      .select("+products")
-      .then(user => {
-        user.products.push(product);
-        user.save({ validateBeforeSave: false });
-      });
+    // await User.findById({ _id: creator })
+    //   .select("+products")
+    //   .then(user => {
+    //     user.products.push(product);
+    //     user.save({ validateBeforeSave: false });
+    //   });
     res.status(201).json({
       success: true,
       product
@@ -71,15 +80,32 @@ exports.getProducts = async (req, res, next) => {
   }
 };
 
+//Get a single product by id
+exports.getProductById = async (req, res, next) => {
+  const { productId } = req.params;
+
+  try {
+    const product = await Product.findById({ _id: productId }).populate(
+      "category",
+      "name"
+    );
+    res.status(201).json({
+      success: true,
+      product
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
 //Update a product
 exports.updateProduct = async (req, res, next) => {
   const { productId } = req.params;
-  const { name, description, price, image, category } = req.body;
+  const { name, description, price, category } = req.body;
   const updatedProduct = {
     name,
     description,
     price,
-    image,
     category
   };
   try {
@@ -97,7 +123,7 @@ exports.deleteProduct = async (req, res, next) => {
   const { productId } = req.params;
   try {
     await Product.findByIdAndDelete({ _id: productId });
-    res.status(200).json({ success: true, message: "Product deleted" });
+    res.status(201).json({ success: true, message: "Product deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

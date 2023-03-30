@@ -3,7 +3,9 @@ import React, { useState, useEffect } from "react";
 import Table from "../../Shared/Components/UIElements/Table";
 import { MDBRow, MDBContainer, MDBBtn } from "mdb-react-ui-kit";
 import axios from "axios";
-export default function Dashboard({ history }) {
+import { useNavigate } from "react-router-dom";
+export default function Dashboard() {
+  let navigate = useNavigate();
   const [user, setUser] = useState([]);
   const [productLength, setproductLength] = useState([]);
   const fetchUser = async () => {
@@ -21,7 +23,7 @@ export default function Dashboard({ history }) {
 
   const createProduct = e => {
     e.preventDefault();
-    history.push("/admin/product/create");
+    navigate("/admin/product/create");
   };
   return (
     <>

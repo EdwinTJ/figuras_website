@@ -24,8 +24,14 @@ const productSchema = new mongoose.Schema({
   },
 
   image: {
-    type: String,
-    trim: true
+    public_id: {
+      type: String,
+      required: true
+    },
+    url: {
+      type: String,
+      required: true
+    }
   },
 
   category: {
@@ -36,8 +42,7 @@ const productSchema = new mongoose.Schema({
 
   creator: {
     type: ObjectId,
-    ref: "User",
-    required: [true, "Product must have a creator"]
+    ref: "User"
   }
 });
 
