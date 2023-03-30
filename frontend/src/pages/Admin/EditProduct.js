@@ -4,13 +4,28 @@ import { MDBContainer, MDBRow, MDBInputGroup, MDBBtn } from "mdb-react-ui-kit";
 import axios from "axios";
 
 // TODO
-// 1. Fix the category dropdown
+// 1. It needs to show the category of the product
 export default function EditProduct() {
   let navigate = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState({});
-  const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState([]);
+
+  //categories from the backend
+  const [categories, setCategories] = useState([]);
+  //fetch products category
+  const fetchProductCategory = () => {
+    axios
+      .get("http://localhost:8000/api/category")
+      .then(cat => {
+        console.log(cat.data.category);
+        setCategories(cat.data.category);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   const fetchProduct = () => {
     try {
       axios
@@ -27,17 +42,6 @@ export default function EditProduct() {
     }
   };
 
-  const fetchProductCategory = () => {
-    axios
-      .get("http://localhost:8000/api/category")
-      .then(cat => {
-        console.log(cat.data.category);
-        setCategories(cat.data.category);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
   useEffect(() => {
     fetchProduct();
     fetchProductCategory();
@@ -48,14 +52,15 @@ export default function EditProduct() {
     const name = e.target[0].value;
     const description = e.target[1].value;
     const price = e.target[2].value;
-
+    const category = e.target[3].value;
     try {
       const { data } = await axios.put(
         `http://localhost:8000/api/product/${id}`,
         {
           name,
           description,
-          price
+          price,
+          category
         }
       );
       if (data.success === true) {
@@ -111,28 +116,22 @@ export default function EditProduct() {
               />
             </MDBInputGroup>
             {/* #9    // FIXME */}
-            {/* <MDBInputGroup className="mb-3" textBefore="Category">
+            <MDBInputGroup className="mb-3" textBefore="Category">
               <select
+                onChange={e => setCategory(e.target.value)}
                 id="category"
-                form="addProduct"
-                name=""
-                className="form-control"
+                className="form-control select select-initialized"
+                value={category}
               >
-                <option disabled>Select</option>
+                <option value="">{category}</option>
                 {categories &&
-                  categories.map((cat, index) => (
-                    <option
-                      key={index}
-                      onChange={e =>
-                        setProduct({ ...product, category: e.target.value })
-                      }
-                      value={cat._id}
-                    >
+                  categories.map(cat => (
+                    <option key={cat._id} value={cat._id}>
                       {cat.name}
                     </option>
                   ))}
               </select>
-            </MDBInputGroup> */}
+            </MDBInputGroup>
             <MDBInputGroup className="mb-3">
               <MDBBtn type="submit">Edit</MDBBtn>
             </MDBInputGroup>

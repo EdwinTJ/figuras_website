@@ -94,7 +94,7 @@ export default function Product() {
                 editLink={`/admin/product/edit/${p._id}`}
                 key={p._id}
                 id={p._id}
-                image={p.image || "https://via.placeholder.com/150"}
+                image={p.image.url || "https://via.placeholder.com/150"}
                 name={p.name}
                 price={p.price}
                 isAdmin={true}
