@@ -6,8 +6,25 @@ import {
   MDBDropdownToggle,
   MDBDropdownItem
 } from "mdb-react-ui-kit";
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/Auth";
 export default function Navbar() {
+  let navigate = useNavigate();
+  const { setAuth, auth } = useAuth();
+
+  const logout = async () => {
+    axios
+      .get("http://localhost:8000/api/user/logout")
+      .then(result => {
+        setAuth({ ...auth, token: null, isAdmin: false });
+        localStorage.removeItem("token");
+        navigate("/login");
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
   return (
     <>
       <div className="navbar">
@@ -42,7 +59,7 @@ export default function Navbar() {
                     <span>Settings</span>
                   </a>
                 </MDBDropdownItem>
-                <MDBDropdownItem link>
+                <MDBDropdownItem onClick={logout}>
                   {" "}
                   <a>
                     {" "}
