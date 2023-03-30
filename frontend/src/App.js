@@ -2,9 +2,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./Shared/Utils/PrivateRoute";
 import { ToastContainer } from "react-toastify";
 
-//Public Pages
+//Components
 import Navbar from "./Shared/Components/Navigation/Navbar";
 import Footer from "./Shared/Components/Navigation/Footer";
+import Login from "./Shared/Components/Forms/Login";
+import SignUp from "./Shared/Components/Forms/SignUp";
+//Public Pages
 import Home from "./pages/Home";
 import Detail from "./pages/Detail";
 //Proteced Pages
@@ -44,7 +47,8 @@ function Routing({ isAdmin }) {
     <Routes>
       <Route exact path="/home" element={<Home />} />
       <Route exact path="/detail/:id" element={<Detail />} />
-
+      <Route exact path="/login" element={<Login />} />
+      <Route exact path="/signup" element={<SignUp />} />
       <Route exact path="/admin" element={<Dashboard />} isAdmin={isAdmin} />
       <Route exact path="/admin/product" element={<Product />} />
       <Route exact path="/admin/product/create" element={<CreateProduct />} />
