@@ -2,28 +2,37 @@ const Product = require("../models/product");
 const User = require("../models/user");
 const Category = require("../models/category");
 const HttpError = require("../middleware/http-error");
-
+const cloudinary = require("../util/cloudinary");
+const { currentUser } = require("../middleware/auth");
 //Create a product
 exports.createProduct = async (req, res, next) => {
   const { name, description, price, image, category, creator } = req.body;
 
   try {
+    const result = await cloudinary.uploader.upload(image, {
+      folder: "figuras"
+      // width: 300,
+      // crop: "scale"
+    });
     const product = await Product.create({
       name,
       description,
       price,
-      image,
-      category,
-      creator
+      image: {
+        public_id: result.public_id,
+        url: result.secure_url
+      },
+      category
+      // creator
     });
 
     // Add product to user
-    await User.findById({ _id: creator })
-      .select("+products")
-      .then(user => {
-        user.products.push(product);
-        user.save({ validateBeforeSave: false });
-      });
+    // await User.findById({ _id: creator })
+    //   .select("+products")
+    //   .then(user => {
+    //     user.products.push(product);
+    //     user.save({ validateBeforeSave: false });
+    //   });
     res.status(201).json({
       success: true,
       product
@@ -92,11 +101,12 @@ exports.getProductById = async (req, res, next) => {
 //Update a product
 exports.updateProduct = async (req, res, next) => {
   const { productId } = req.params;
-  const { name, description, price } = req.body;
+  const { name, description, price, category } = req.body;
   const updatedProduct = {
     name,
     description,
-    price
+    price,
+    category
   };
   try {
     await Product.findByIdAndUpdate({ _id: productId }, updatedProduct);
