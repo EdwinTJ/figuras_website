@@ -4,13 +4,17 @@ import Table from "../../Shared/Components/UIElements/Table";
 import { MDBRow, MDBContainer, MDBBtn } from "mdb-react-ui-kit";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./../../Shared/context/Auth";
+
 export default function Dashboard() {
   let navigate = useNavigate();
   const [user, setUser] = useState([]);
   const [productLength, setproductLength] = useState([]);
+  const { auth } = useAuth();
+
   const fetchUser = async () => {
     await axios
-      .get("http://localhost:8000/api/user/641bb01b715f60781d71561c")
+      .get(`http://localhost:8000/api/user/${auth.userId}`)
       .then(res => {
         setUser(res.data.user);
         setproductLength(res.data.user.products.length);

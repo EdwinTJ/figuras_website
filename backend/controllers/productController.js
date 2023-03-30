@@ -4,9 +4,18 @@ const Category = require("../models/category");
 const HttpError = require("../middleware/http-error");
 const cloudinary = require("../util/cloudinary");
 const { currentUser } = require("../middleware/auth");
+
+const getUserIdFromToken = req => {
+  const token = req.headers.authorization;
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  return decoded.id;
+};
+
 //Create a product
 exports.createProduct = async (req, res, next) => {
   const { name, description, price, image, category, creator } = req.body;
+
+  const userId = getUserIdFromToken(req);
 
   try {
     const result = await cloudinary.uploader.upload(image, {
