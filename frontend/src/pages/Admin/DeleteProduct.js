@@ -1,9 +1,53 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../Shared/Components/Navigation/Dashboard/Navbar";
 import Sidebar from "../../Shared/Components/Navigation/Dashboard/Sidebar";
 import { MDBContainer, MDBRow, MDBInputGroup, MDBBtn } from "mdb-react-ui-kit";
+import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+export default function DeleteProduct() {
+  let navigate = useNavigate();
+  const { id } = useParams();
+  const [product, setProduct] = useState({});
+  const [category, setCategory] = useState({});
+  const fetchProduct = () => {
+    try {
+      axios
+        .get(`http://localhost:8000/api/products/single/${id}`)
+        .then(prod => {
+          setProduct(prod.data.product);
+          setCategory(prod.data.product.category.name);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-export default function CreateProduct() {
+  useEffect(() => {
+    fetchProduct();
+  }, []);
+
+  const deleteProduct = async () => {
+    try {
+      const { data } = await axios.delete(
+        `http://localhost:8000/api/product/${id}`
+      );
+      if (data.success === true) {
+        console.log(data.message);
+        if (typeof window !== "undefined") {
+          setTimeout(() => {
+            navigate("/admin/product");
+          }, 2000);
+        }
+      }
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <Navbar />
@@ -20,36 +64,25 @@ export default function CreateProduct() {
           style={{ marginTop: "60px", marginBottom: "20px" }}
         >
           <MDBInputGroup className="mb-3" textBefore="Name">
-            <input className="form-control" type="text" />
+            <input className="form-control" type="text" value={product.name} />
           </MDBInputGroup>
 
           <MDBInputGroup textBefore="Description">
-            <textarea className="form-control" />
+            <textarea className="form-control" value={product.description} />
           </MDBInputGroup>
 
           <MDBInputGroup textBefore="Price" textAfter={["$", "0.00"]}>
-            <input className="form-control" type="text" />
+            <input className="form-control" type="text" value={product.price} />
           </MDBInputGroup>
 
           <MDBInputGroup className="mb-3" textBefore="Category">
-            <select id="category" form="addProduct">
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="opel">Opel</option>
-              <option value="audi">Audi</option>
-            </select>
-          </MDBInputGroup>
-
-          <MDBInputGroup className="mb-3" textBefore="User">
-            <input className="form-control" type="text" />
+            <input className="form-control" type="text" value={category} />
           </MDBInputGroup>
 
           <MDBInputGroup className="mb-3">
-            <input className="form-control" type="file" />
-          </MDBInputGroup>
-
-          <MDBInputGroup className="mb-3">
-            <MDBBtn type="submit">Submit</MDBBtn>
+            <MDBBtn type="submit" onClick={deleteProduct}>
+              Delete
+            </MDBBtn>
           </MDBInputGroup>
         </MDBRow>
       </MDBContainer>

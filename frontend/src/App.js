@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./Shared/Utils/PrivateRoute";
+import { ToastContainer } from "react-toastify";
+
 //Public Pages
 import Navbar from "./Shared/Components/Navigation/Navbar";
 import Footer from "./Shared/Components/Navigation/Footer";

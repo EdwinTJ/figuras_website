@@ -90,6 +90,8 @@ export default function Product() {
           {products &&
             products.map(p => (
               <Card
+                deleteLink={`/admin/product/delete/${p._id}`}
+                editLink={`/admin/product/edit/${p._id}`}
                 key={p._id}
                 id={p._id}
                 image={p.image || "https://via.placeholder.com/150"}
