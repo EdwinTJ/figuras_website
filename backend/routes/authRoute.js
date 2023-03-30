@@ -8,6 +8,7 @@ const {
   getSingleUser,
   deleteUser
 } = require("../controllers/authController");
+const { isAuthenticated } = require("../middleware/auth");
 const { check } = require("express-validator");
 
 router.get("/user", getUsers);
@@ -32,6 +33,7 @@ router.post(
       .isEmpty()
       .withMessage("Must Enter a Password")
   ],
+  isAuthenticated,
   signup
 );
 router.post(

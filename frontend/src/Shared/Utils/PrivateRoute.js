@@ -1,9 +1,15 @@
-// import React from "react";
-// import { Route, Redirect } from "react-router-dom";
+import React from "react";
+import { Outlet, Navigate } from "react-router-dom";
+import { useAuth } from "../context/Auth";
 
-// export default function PrivateRoute({ isAdmin, ...rest }) {
-//   if (isAdmin === true) {
-//     return <Route {...rest} />;
-//   }
-//   return <Redirect to="/home" />;
-// }
+const PrivateRoute = () => {
+  const { auth } = useAuth();
+
+  if (auth.isAdmin) {
+    return <Outlet />;
+  } else {
+    return <Navigate to="/login" />;
+  }
+};
+
+export default PrivateRoute;
