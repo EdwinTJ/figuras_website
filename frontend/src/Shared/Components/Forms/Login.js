@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { MDBContainer, MDBInput, MDBBtn } from "mdb-react-ui-kit";
+import { useAuth } from "../../context/Auth";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 export default function Login() {
+  let navigate = useNavigate();
+  const { auth, setAuth } = useAuth();
+
   const [values, setValues] = useState({
     email: "",
     password: ""
@@ -29,9 +34,13 @@ export default function Login() {
 
       if (data.success === true) {
         setValues({ name: "", email: "", password: "" });
+        setAuth({ ...auth, token: data.token, isAdmin: true });
+
+        localStorage.setItem("token", data.token);
+        navigate("/admin");
       }
     } catch (err) {
-      console.log(err.response.data.error);
+      console.log(err);
     }
   };
   return (
