@@ -71,6 +71,24 @@ exports.getProducts = async (req, res, next) => {
   }
 };
 
+//Get a single product by id
+exports.getProductById = async (req, res, next) => {
+  const { productId } = req.params;
+
+  try {
+    const product = await Product.findById({ _id: productId }).populate(
+      "category",
+      "name"
+    );
+    res.status(201).json({
+      success: true,
+      product
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
 //Update a product
 exports.updateProduct = async (req, res, next) => {
   const { productId } = req.params;
@@ -97,7 +115,7 @@ exports.deleteProduct = async (req, res, next) => {
   const { productId } = req.params;
   try {
     await Product.findByIdAndDelete({ _id: productId });
-    res.status(200).json({ success: true, message: "Product deleted" });
+    res.status(201).json({ success: true, message: "Product deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
