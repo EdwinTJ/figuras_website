@@ -10,14 +10,15 @@ import {
   MDBNavbarBrand,
   MDBCollapse
 } from "mdb-react-ui-kit";
+import { useAuth } from "../../context/Auth";
 import { Link } from "react-router-dom";
 export default function Navbar() {
   const [showNavColorSecond, setShowNavColorSecond] = useState(false);
-
+  const { auth } = useAuth();
   return (
     <MDBNavbar expand="lg" dark bgColor="dark">
       <MDBContainer fluid>
-        <MDBNavbarBrand href="#">Navbar</MDBNavbarBrand>
+        <MDBNavbarBrand>Figuras De Anime</MDBNavbarBrand>
         <MDBNavbarToggler
           type="button"
           data-target="#navbarColor02"
@@ -35,15 +36,30 @@ export default function Navbar() {
                 <MDBNavbarLink aria-current="page">Home</MDBNavbarLink>
               </Link>
             </MDBNavbarItem>
-            <MDBNavbarItem className="active">
-              <Link to="/detail/:id">
-                <MDBNavbarLink aria-current="page">Detail</MDBNavbarLink>
-              </Link>
-            </MDBNavbarItem>
-
             <MDBNavbarItem>
               <MDBNavbarLink href="#">About</MDBNavbarLink>
             </MDBNavbarItem>
+            {auth.isAdmin && (
+              <MDBNavbarItem className="active">
+                <Link to="/admin">
+                  <MDBNavbarLink aria-current="page">Admin</MDBNavbarLink>
+                </Link>
+              </MDBNavbarItem>
+            )}
+            {auth.isAdmin && (
+              <MDBNavbarItem className="active">
+                <Link to="/admin/product">
+                  <MDBNavbarLink aria-current="page">Products</MDBNavbarLink>
+                </Link>
+              </MDBNavbarItem>
+            )}
+            {auth.isAdmin && (
+              <MDBNavbarItem className="active">
+                <Link to="/signup">
+                  <MDBNavbarLink aria-current="page">Sign In</MDBNavbarLink>
+                </Link>
+              </MDBNavbarItem>
+            )}
           </MDBNavbarNav>
         </MDBCollapse>
       </MDBContainer>

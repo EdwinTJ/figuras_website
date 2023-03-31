@@ -1,6 +1,6 @@
 import React from "react";
 import { MDBFooter, MDBContainer, MDBIcon, MDBBtn } from "mdb-react-ui-kit";
-
+import { Link } from "react-router-dom";
 export default function Footer() {
   return (
     <MDBFooter
@@ -90,7 +90,7 @@ export default function Footer() {
             rippleColor="link"
             style={{ float: "right", marginBottom: "15rem" }}
           >
-            Sign In
+            <Link to="/login">Log In</Link>
           </MDBBtn>
         </section>
       </MDBContainer>

@@ -3,7 +3,7 @@ const User = require("../models/user");
 const Category = require("../models/category");
 const HttpError = require("../middleware/http-error");
 const cloudinary = require("../util/cloudinary");
-const { currentUser } = require("../middleware/auth");
+const jwt = require("jsonwebtoken");
 
 const getUserIdFromToken = req => {
   const token = req.headers.authorization;
@@ -13,7 +13,7 @@ const getUserIdFromToken = req => {
 
 //Create a product
 exports.createProduct = async (req, res, next) => {
-  const { name, description, price, image, category, creator } = req.body;
+  const { name, description, price, image, category } = req.body;
 
   const userId = getUserIdFromToken(req);
 
@@ -31,17 +31,17 @@ exports.createProduct = async (req, res, next) => {
         public_id: result.public_id,
         url: result.secure_url
       },
-      category
-      // creator
+      category,
+      creator: userId
     });
 
     // Add product to user
-    // await User.findById({ _id: creator })
-    //   .select("+products")
-    //   .then(user => {
-    //     user.products.push(product);
-    //     user.save({ validateBeforeSave: false });
-    //   });
+    await User.findById({ _id: userId })
+      .select("+products")
+      .then(user => {
+        user.products.push(product);
+        user.save({ validateBeforeSave: false });
+      });
     res.status(201).json({
       success: true,
       product

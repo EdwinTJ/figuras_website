@@ -21,13 +21,16 @@ export default function Card({
     <MDBCol>
       <MDBCard className="h-100">
         <MDBCardImage
-          src={image || "https://picsum.photos/200"}
+          src={image || "https://mdbcdn.b-cdn.net/img/new/slides/041.webp"}
           alt="..."
           position="top"
         />
         <MDBCardBody>
           <MDBCardTitle className="text-center">{name}</MDBCardTitle>
           <MDBCardText className="text-center">${price}</MDBCardText>
+          <Link to={`/detail/${id}`} className="text-center">
+            Details
+          </Link>
           {isAdmin && (
             <Link to={editLink} className="text-center">
               Edit

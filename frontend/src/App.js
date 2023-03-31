@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./Shared/Utils/PrivateRoute";
 import { ProviderAuth } from "./Shared/context/Auth";
-
+import { useAuth } from "./Shared/context/Auth";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
 //Components
@@ -21,8 +21,7 @@ import Product from "./pages/Admin/Product";
 import CreateProduct from "./pages/Admin/CreateProduct";
 import EditProduct from "./pages/Admin/EditProduct";
 import DeleteProduct from "./pages/Admin/DeleteProduct";
-import NavbarAdmin from "./Shared/Components/Navigation/Dashboard/Navbar";
-import Sidebar from "./Shared/Components/Navigation/Dashboard/Sidebar";
+
 function App() {
   axios.interceptors.request.use(async req => {
     try {
@@ -31,6 +30,7 @@ function App() {
       return req;
     } catch (err) {}
   });
+
   return (
     <>
       <BrowserRouter>
@@ -42,9 +42,10 @@ function App() {
               </div>
             }
           >
-            <NavbarAdmin />
-            <Sidebar />
+            <ToastContainer />
+            <Navbar />
             <Routing />
+            <Footer />
           </Suspense>
         </ProviderAuth>
       </BrowserRouter>

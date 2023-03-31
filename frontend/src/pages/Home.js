@@ -3,13 +3,14 @@ import Card from "../Shared/Components/UIElements/Card";
 import { MDBRow, MDBContainer, MDBBtn } from "mdb-react-ui-kit";
 import axios from "axios";
 import { Pagination } from "antd";
-
+import { useAuth } from "../Shared/context/Auth";
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
   const [count, setCount] = useState(0);
+  const { auth } = useAuth();
 
   const fetchProduct = () => {
     axios
@@ -95,11 +96,14 @@ export default function Home() {
           {products &&
             products.map(p => (
               <Card
+                deleteLink={`/admin/product/delete/${p._id}`}
+                editLink={`/admin/product/edit/${p._id}`}
                 key={p._id}
-                image={p.image || "https://via.placeholder.com/150"}
+                id={p._id}
+                image={p.image.url || "https://via.placeholder.com/150"}
                 name={p.name}
                 price={p.price}
-                isAdmin={true}
+                isAdmin={auth.isAdmin}
               />
             ))}
         </MDBRow>

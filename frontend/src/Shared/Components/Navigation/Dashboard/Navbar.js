@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ATProwhite from "./assets/AT-pro-white.png";
 import {
   MDBDropdown,
@@ -12,7 +12,15 @@ import { useAuth } from "../../../context/Auth";
 export default function Navbar() {
   let navigate = useNavigate();
   const { setAuth, auth } = useAuth();
+  const [user, setUser] = useState([]);
 
+  const fetchUser = async () => {
+    await axios
+      .get(`http://localhost:8000/api/user/${auth.userId}`)
+      .then(res => {
+        setUser(res.data.user.name);
+      });
+  };
   const logout = async () => {
     axios
       .get("http://localhost:8000/api/user/logout")
@@ -25,6 +33,10 @@ export default function Navbar() {
         console.log(error);
       });
   };
+
+  useEffect(() => {
+    fetchUser();
+  }, [auth.token]);
   return (
     <>
       <div className="navbar">
@@ -42,7 +54,7 @@ export default function Navbar() {
           <li className="nav-item avt-wrapper">
             <MDBDropdown>
               <MDBDropdownToggle className="btn btn-primary">
-                User
+                {user}
               </MDBDropdownToggle>
               <MDBDropdownMenu>
                 <MDBDropdownItem link>

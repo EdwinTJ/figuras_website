@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import { MDBContainer, MDBRow, MDBInputGroup, MDBBtn } from "mdb-react-ui-kit";
 import axios from "axios";
 export default function CreateProduct() {

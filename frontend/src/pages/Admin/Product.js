@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MDBRow, MDBContainer, MDBBtn } from "mdb-react-ui-kit";
 import Card from "../../Shared/Components/UIElements/Card";
 import axios from "axios";
+import { useAuth } from "../../Shared/context/Auth";
 import { Pagination } from "antd";
 export default function Product() {
   const [products, setProducts] = useState([]);
@@ -10,12 +11,14 @@ export default function Product() {
   const [pageNumber, setPageNumber] = useState(1);
   const [count, setCount] = useState(0);
 
+  const { auth } = useAuth();
   const fetchProduct = () => {
     axios
       .get(
         `http://localhost:8000/api/product?cat=${category}&pageNumber=${pageNumber}`
       )
       .then(prods => {
+        console.log("products", prods.data.products);
         setProducts(prods.data.products);
         setCount(prods.data.count);
       })
@@ -29,6 +32,7 @@ export default function Product() {
     axios
       .get("http://localhost:8000/api/category")
       .then(cat => {
+        console.log(cat.data.category);
         setCategories(cat.data.category);
       })
       .catch(error => {
@@ -43,6 +47,8 @@ export default function Product() {
   useEffect(() => {
     fetchProductCategory();
   }, []);
+
+  console.log(category);
 
   //filter product
   const filterProduct = e => {
@@ -97,12 +103,12 @@ export default function Product() {
                 image={p.image.url || "https://via.placeholder.com/150"}
                 name={p.name}
                 price={p.price}
-                isAdmin={true}
+                isAdmin={auth.isAdmin}
               />
             ))}
         </MDBRow>
         <Pagination
-          style={{ float: "right", margin: "5px" }}
+          style={{ float: "right", marginTop: "5px", marginBottom: "500px" }}
           current={pageNumber}
           total={count}
           onChange={prev => setPageNumber(prev)}
