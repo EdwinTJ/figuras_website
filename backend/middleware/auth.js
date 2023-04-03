@@ -5,7 +5,6 @@ const HttpError = require("../middleware/http-error");
 // check if user is authenticated
 exports.isAuthenticated = async (req, res, next) => {
   const token = req.headers.authorization;
-  console.log(req.headers.authorization);
   // make sure token exists
   if (!token) {
     return next(new HttpError("You must log in to access this ressource", 401));

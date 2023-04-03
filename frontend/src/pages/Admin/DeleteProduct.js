@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../../Shared/Components/Navigation/Dashboard/Navbar";
-import Sidebar from "../../Shared/Components/Navigation/Dashboard/Sidebar";
+
 import { MDBContainer, MDBRow, MDBInputGroup, MDBBtn } from "mdb-react-ui-kit";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 export default function DeleteProduct() {
   let navigate = useNavigate();
   const { id } = useParams();
@@ -50,8 +48,6 @@ export default function DeleteProduct() {
   };
   return (
     <>
-      <Navbar />
-      <Sidebar />
       <MDBContainer>
         <MDBRow
           className="row-cols-1 row-cols-md-3 g-4"

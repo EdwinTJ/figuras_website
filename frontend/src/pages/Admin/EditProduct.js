@@ -3,8 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { MDBContainer, MDBRow, MDBInputGroup, MDBBtn } from "mdb-react-ui-kit";
 import axios from "axios";
 
-// TODO
-// 1. It needs to show the category of the product
 export default function EditProduct() {
   let navigate = useNavigate();
   const { id } = useParams();

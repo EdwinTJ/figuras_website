@@ -59,7 +59,6 @@ export default function CreateProduct() {
         setCategory("");
         setImage("");
       }
-      console.log(data);
     } catch (error) {
       console.log(error);
     }

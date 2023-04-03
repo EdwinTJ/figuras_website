@@ -2,8 +2,6 @@ import { Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./Shared/Utils/PrivateRoute";
 import { ProviderAuth } from "./Shared/context/Auth";
-import { useAuth } from "./Shared/context/Auth";
-import { ToastContainer } from "react-toastify";
 import axios from "axios";
 //Components
 import Navbar from "./Shared/Components/Navigation/Navbar";
@@ -14,7 +12,9 @@ import LoadingSpinner from "./Shared/Components/UIElements/LoadingSpinner";
 
 //Public Pages
 import Home from "./pages/Home";
+import About from "./pages/About";
 import Detail from "./pages/Detail";
+
 //Proteced Pages
 import Dashboard from "./pages/Admin/Dashboard";
 import Product from "./pages/Admin/Product";
@@ -42,7 +42,6 @@ function App() {
               </div>
             }
           >
-            <ToastContainer />
             <Navbar />
             <Routing />
             <Footer />
@@ -56,7 +55,9 @@ function App() {
 function Routing() {
   return (
     <Routes>
+      <Route exact path="/" element={<Home />} />
       <Route exact path="/home" element={<Home />} />
+      <Route exact path="/about" element={<About />} />
       <Route exact path="/detail/:id" element={<Detail />} />
       <Route exact path="/login" element={<Login />} />
       <Route element={<PrivateRoute />}>
