@@ -1,27 +1,24 @@
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./Shared/Utils/PrivateRoute";
 import { ProviderAuth } from "./Shared/context/Auth";
 import axios from "axios";
 //Components
-import Navbar from "./Shared/Components/Navigation/Navbar";
-import Footer from "./Shared/Components/Navigation/Footer";
-import Login from "./Shared/Components/Forms/Login";
-import SignUp from "./Shared/Components/Forms/SignUp";
 import LoadingSpinner from "./Shared/Components/UIElements/LoadingSpinner";
-
+const Navbar = lazy(() => import("./Shared/Components/Navigation/Navbar"));
+const Footer = lazy(() => import("./Shared/Components/Navigation/Footer"));
+const SignUp = lazy(() => import("./Shared/Components/Forms/SignUp"));
+const Login = lazy(() => import("./Shared/Components/Forms/Login"));
 //Public Pages
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Detail from "./pages/Detail";
-
-//Proteced Pages
-import Dashboard from "./pages/Admin/Dashboard";
-import Product from "./pages/Admin/Product";
-import CreateProduct from "./pages/Admin/CreateProduct";
-import EditProduct from "./pages/Admin/EditProduct";
-import DeleteProduct from "./pages/Admin/DeleteProduct";
-
+const Home = lazy(() => import("./pages/Home"));
+const About = lazy(() => import("./pages/About"));
+const Detail = lazy(() => import("./pages/Detail"));
+//Protected Pages
+const Dashboard = lazy(() => import("./pages/Admin/Dashboard"));
+const Product = lazy(() => import("./pages/Admin/Product"));
+const CreateProduct = lazy(() => import("./pages/Admin/CreateProduct"));
+const EditProduct = lazy(() => import("./pages/Admin/EditProduct"));
+const DeleteProduct = lazy(() => import("./pages/Admin/DeleteProduct"));
 function App() {
   axios.interceptors.request.use(async req => {
     try {
