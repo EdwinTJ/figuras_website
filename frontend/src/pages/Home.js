@@ -14,9 +14,7 @@ export default function Home() {
 
   const fetchProduct = () => {
     axios
-      .get(
-        `http://localhost:8000/api/product?cat=${category}&pageNumber=${pageNumber}`
-      )
+      .get(`api/product?cat=${category}&pageNumber=${pageNumber}`)
       .then(prods => {
         console.log("products", prods.data.products);
         setProducts(prods.data.products);
@@ -30,7 +28,7 @@ export default function Home() {
   //fetch products category
   const fetchProductCategory = () => {
     axios
-      .get("http://localhost:8000/api/category")
+      .get("/api/category")
       .then(cat => {
         console.log(cat.data.category);
         setCategories(cat.data.category);

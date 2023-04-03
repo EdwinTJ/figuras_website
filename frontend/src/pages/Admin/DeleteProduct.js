@@ -11,7 +11,7 @@ export default function DeleteProduct() {
   const fetchProduct = () => {
     try {
       axios
-        .get(`http://localhost:8000/api/products/single/${id}`)
+        .get(`/api/products/single/${id}`)
         .then(prod => {
           setProduct(prod.data.product);
           setCategory(prod.data.product.category.name);
@@ -30,9 +30,7 @@ export default function DeleteProduct() {
 
   const deleteProduct = async () => {
     try {
-      const { data } = await axios.delete(
-        `http://localhost:8000/api/product/${id}`
-      );
+      const { data } = await axios.delete(`/api/product/${id}`);
       if (data.success === true) {
         console.log(data.message);
         if (typeof window !== "undefined") {

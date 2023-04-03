@@ -14,7 +14,7 @@ export default function Dashboard() {
 
   const fetchUser = async () => {
     await axios
-      .get(`http://localhost:8000/api/user/${auth.userId}`)
+      .get(`/api/user/${auth.userId}`)
       .then(res => {
         setUser(res.data.user);
         setproductLength(res.data.user.products.length);

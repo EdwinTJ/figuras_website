@@ -20,6 +20,7 @@ const CreateProduct = lazy(() => import("./pages/Admin/CreateProduct"));
 const EditProduct = lazy(() => import("./pages/Admin/EditProduct"));
 const DeleteProduct = lazy(() => import("./pages/Admin/DeleteProduct"));
 function App() {
+  axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL;
   axios.interceptors.request.use(async req => {
     try {
       const token = localStorage.getItem("token");

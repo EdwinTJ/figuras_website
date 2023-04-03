@@ -10,7 +10,7 @@ export default function Detail() {
   const fetchProduct = () => {
     try {
       axios
-        .get(`http://localhost:8000/api/products/single/${id}`)
+        .get(`/api/products/single/${id}`)
         .then(prod => {
           setProduct(prod.data.product);
           setUrl(prod.data.product.image.url);

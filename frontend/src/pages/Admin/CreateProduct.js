@@ -13,7 +13,7 @@ export default function CreateProduct() {
   //fetch products category
   const fetchProductCategory = () => {
     axios
-      .get("http://localhost:8000/api/category")
+      .get("/api/category")
       .then(cat => {
         console.log(cat.data.category);
         setCategories(cat.data.category);
@@ -45,7 +45,7 @@ export default function CreateProduct() {
   const submitForm = async e => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("http://localhost:8000/api/product", {
+      const { data } = await axios.post("/api/product", {
         name,
         description,
         price,

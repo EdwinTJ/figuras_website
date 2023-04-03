@@ -14,7 +14,7 @@ export default function EditProduct() {
   //fetch products category
   const fetchProductCategory = () => {
     axios
-      .get("http://localhost:8000/api/category")
+      .get("/api/category")
       .then(cat => {
         console.log(cat.data.category);
         setCategories(cat.data.category);
@@ -27,7 +27,7 @@ export default function EditProduct() {
   const fetchProduct = () => {
     try {
       axios
-        .get(`http://localhost:8000/api/products/single/${id}`)
+        .get(`/api/products/single/${id}`)
         .then(prod => {
           setProduct(prod.data.product);
           setCategory(prod.data.product.category.name);
@@ -52,15 +52,12 @@ export default function EditProduct() {
     const price = e.target[2].value;
     const category = e.target[3].value;
     try {
-      const { data } = await axios.put(
-        `http://localhost:8000/api/product/${id}`,
-        {
-          name,
-          description,
-          price,
-          category
-        }
-      );
+      const { data } = await axios.put(`/api/product/${id}`, {
+        name,
+        description,
+        price,
+        category
+      });
       if (data.success === true) {
         if (typeof window !== "undefined") {
           setTimeout(() => {
