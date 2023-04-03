@@ -16,8 +16,9 @@ export default function Footer() {
             color="light"
             floating
             className="m-1"
-            href="#!"
+            href="https://www.facebook.com/marketplace/profile/100020595885483/?ref=share_attachment"
             role="button"
+            target="_blank"
           >
             <MDBIcon fab icon="facebook-f" />
           </MDBBtn>
@@ -41,49 +42,14 @@ export default function Footer() {
             href="#!"
             role="button"
           >
-            <MDBIcon fab icon="google" />
-          </MDBBtn>
-
-          <MDBBtn
-            outline
-            color="light"
-            floating
-            className="m-1"
-            href="#!"
-            role="button"
-          >
             <MDBIcon fab icon="instagram" />
-          </MDBBtn>
-
-          <MDBBtn
-            outline
-            color="light"
-            floating
-            className="m-1"
-            href="#!"
-            role="button"
-          >
-            <MDBIcon fab icon="linkedin-in" />
-          </MDBBtn>
-
-          <MDBBtn
-            outline
-            color="light"
-            floating
-            className="m-1"
-            href="#!"
-            role="button"
-          >
-            <MDBIcon fab icon="github" />
           </MDBBtn>
         </section>
 
         <section className="mb-4">
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
-            distinctio earum repellat quaerat voluptatibus placeat nam, commodi
-            optio pariatur est quia magnam eum harum corrupti dicta, aliquam
-            sequi voluptate quas.
+            Vendemos figuras de anime, manga, videojuegos y mucho más. ¡No te lo
+            pierdas!
           </p>
           <MDBBtn
             color="dark"
@@ -100,8 +66,8 @@ export default function Footer() {
         style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
       >
         © 2020 Copyright:
-        <a className="text-white" href="https://mdbootstrap.com/">
-          MDBootstrap.com
+        <a className="text-white" href="https://www.edwinsilvestrewebsite.com/">
+          Edwin Silvestre
         </a>
       </div>
     </MDBFooter>
