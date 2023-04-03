@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { MDBContainer, MDBRow, MDBInputGroup, MDBBtn } from "mdb-react-ui-kit";
+import { toast } from "react-toastify";
 import axios from "axios";
 export default function CreateProduct() {
   const [name, setName] = useState("");
@@ -58,6 +59,7 @@ export default function CreateProduct() {
         setPrice("");
         setCategory("");
         setImage("");
+        toast.success("Product Created Successfully");
       }
     } catch (error) {
       console.log(error);

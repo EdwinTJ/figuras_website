@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { MDBContainer, MDBRow, MDBInputGroup, MDBBtn } from "mdb-react-ui-kit";
 import axios from "axios";
-
+import { toast } from "react-toastify";
 export default function EditProduct() {
   let navigate = useNavigate();
   const { id } = useParams();
@@ -59,6 +59,7 @@ export default function EditProduct() {
         category
       });
       if (data.success === true) {
+        toast.success("Product Updated Successfully");
         if (typeof window !== "undefined") {
           setTimeout(() => {
             navigate("/admin/product");
