@@ -22,13 +22,10 @@ export default function Login() {
   const login = async e => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(
-        "http://localhost:8000/api/user/login",
-        {
-          email,
-          password
-        }
-      );
+      const { data } = await axios.post("/api/user/login", {
+        email,
+        password
+      });
 
       console.log(data);
 

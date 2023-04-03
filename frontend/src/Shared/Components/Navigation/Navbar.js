@@ -25,16 +25,14 @@ export default function Navbar() {
   const { setAuth, auth } = useAuth();
   const [user, setUser] = useState([]);
   const fetchUser = async () => {
-    await axios
-      .get(`http://localhost:8000/api/user/${auth.userId}`)
-      .then(res => {
-        setUser(res.data.user.name);
-      });
+    await axios.get(`/api/user/${auth.userId}`).then(res => {
+      setUser(res.data.user.name);
+    });
   };
 
   const logout = async () => {
     axios
-      .get("http://localhost:8000/api/user/logout")
+      .get("/api/user/logout")
       .then(result => {
         setAuth({ ...auth, token: null, isAdmin: false });
         localStorage.removeItem("token");

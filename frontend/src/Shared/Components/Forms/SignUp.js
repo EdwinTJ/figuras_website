@@ -18,7 +18,7 @@ export default function SignUp() {
   const signup = async e => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("http://localhost:8000/api/user", {
+      const { data } = await axios.post("api/user", {
         name,
         email,
         password
