@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./Shared/Utils/PrivateRoute";
 import { ProviderAuth } from "./Shared/context/Auth";
 import axios from "axios";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 //Components
 import LoadingSpinner from "./Shared/Components/UIElements/LoadingSpinner";
 const Navbar = lazy(() => import("./Shared/Components/Navigation/Navbar"));
@@ -40,6 +42,7 @@ function App() {
               </div>
             }
           >
+            <ToastContainer />
             <Navbar />
             <Routing />
             <Footer />

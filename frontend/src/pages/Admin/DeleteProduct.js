@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-
 import { MDBContainer, MDBRow, MDBInputGroup, MDBBtn } from "mdb-react-ui-kit";
+import { toast } from "react-toastify";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 export default function DeleteProduct() {
@@ -32,7 +32,7 @@ export default function DeleteProduct() {
     try {
       const { data } = await axios.delete(`/api/product/${id}`);
       if (data.success === true) {
-        console.log(data.message);
+        toast.success("Product deleted successfully");
         if (typeof window !== "undefined") {
           setTimeout(() => {
             navigate("/admin/product");
