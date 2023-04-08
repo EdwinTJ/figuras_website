@@ -4,11 +4,13 @@ const {
   getCategory,
   createCategory,
   updateCategory,
-  deleteCategory
+  deleteCategory,
+  getCategoryById
 } = require("../controllers/categoryController");
 const { check } = require("express-validator");
 
 router.get("/category", getCategory);
+router.get("/category/single/:categoryId", getCategoryById);
 router.post(
   "/category",
   [

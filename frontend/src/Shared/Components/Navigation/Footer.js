@@ -7,7 +7,7 @@ export default function Footer() {
       className="text-center"
       color="white"
       bgColor="dark"
-      style={{ marginTop: "80px" }}
+      style={{ marginTop: "80px", marginBottom: "0px" }}
     >
       <MDBContainer className="p-4">
         <section className="mb-4">
@@ -21,28 +21,6 @@ export default function Footer() {
             target="_blank"
           >
             <MDBIcon fab icon="facebook-f" />
-          </MDBBtn>
-
-          <MDBBtn
-            outline
-            color="light"
-            floating
-            className="m-1"
-            href="#!"
-            role="button"
-          >
-            <MDBIcon fab icon="twitter" />
-          </MDBBtn>
-
-          <MDBBtn
-            outline
-            color="light"
-            floating
-            className="m-1"
-            href="#!"
-            role="button"
-          >
-            <MDBIcon fab icon="instagram" />
           </MDBBtn>
         </section>
 
@@ -65,7 +43,7 @@ export default function Footer() {
         className="text-center p-3"
         style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
       >
-        © 2020 Copyright:
+        © 2023 Pagina Creada Por:
         <a className="text-white" href="https://www.edwinsilvestrewebsite.com/">
           Edwin Silvestre
         </a>

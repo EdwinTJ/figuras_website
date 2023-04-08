@@ -60,7 +60,7 @@ export default function Home() {
           className="row-cols-1 row-cols-md-3 g-4"
           style={{ marginTop: "60px", marginBottom: "20px" }}
         >
-          <h2>Filter by category</h2>
+          <h2>Filtrar Por Categoria</h2>
           <form>
             <div className="form-group">
               <select
@@ -78,7 +78,7 @@ export default function Home() {
                       {cat.name}
                     </option>
                   ))}
-                <option value="">All</option>
+                <option value="">Todos</option>
               </select>
             </div>
             <button
@@ -86,7 +86,7 @@ export default function Home() {
               type="submit"
               className="btn btn-primary mt-3"
             >
-              Filter
+              Filtrar
             </button>
           </form>
         </MDBRow>
@@ -112,13 +112,6 @@ export default function Home() {
           onChange={prev => setPageNumber(prev)}
           pageSize={6}
         />
-        <MDBBtn
-          color="link"
-          rippleColor="dark"
-          style={{ float: "right", margin: "5px" }}
-        >
-          View All
-        </MDBBtn>
       </MDBContainer>
     </>
   );

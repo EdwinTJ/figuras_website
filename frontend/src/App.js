@@ -21,6 +21,10 @@ const Product = lazy(() => import("./pages/Admin/Product"));
 const CreateProduct = lazy(() => import("./pages/Admin/CreateProduct"));
 const EditProduct = lazy(() => import("./pages/Admin/EditProduct"));
 const DeleteProduct = lazy(() => import("./pages/Admin/DeleteProduct"));
+const CreateCategory = lazy(() => import("./pages/Categories/Create"));
+const ShowCategory = lazy(() => import("./pages/Categories/Display"));
+const DeleteCategory = lazy(() => import("./pages/Categories/Delete"));
+const EditCategory = lazy(() => import("./pages/Categories/Edit"));
 function App() {
   axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL;
   axios.interceptors.request.use(async req => {
@@ -73,6 +77,14 @@ function Routing() {
           element={<DeleteProduct />}
         />
       </Route>
+      <Route exact path="/admin/category" element={<CreateCategory />} />
+      <Route exact path="/admin/category/show" element={<ShowCategory />} />
+      <Route exact path="/admin/category/edit/:id" element={<EditCategory />} />
+      <Route
+        exact
+        path="/admin/category/delete/:id"
+        element={<DeleteCategory />}
+      />
     </Routes>
   );
 }

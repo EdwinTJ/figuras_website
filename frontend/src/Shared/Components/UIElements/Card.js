@@ -29,7 +29,7 @@ export default function Card({
           <MDBCardTitle className="text-center">{name}</MDBCardTitle>
           <MDBCardText className="text-center">${price}</MDBCardText>
           <Link to={`/detail/${id}`} className="text-center">
-            Details
+            Detalles
           </Link>
           {isAdmin && (
             <Link to={editLink} className="text-center">
