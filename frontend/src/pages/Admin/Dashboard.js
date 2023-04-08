@@ -13,12 +13,10 @@ export default function Dashboard() {
   const { auth } = useAuth();
 
   const fetchUser = async () => {
-    await axios
-      .get(`/api/user/${auth.userId}`)
-      .then(res => {
-        setUser(res.data.user);
-        setproductLength(res.data.user.products.length);
-      });
+    await axios.get(`/api/user/${auth.userId}`).then(res => {
+      setUser(res.data.user);
+      setproductLength(res.data.user.products.length);
+    });
   };
 
   useEffect(() => {
@@ -28,6 +26,15 @@ export default function Dashboard() {
   const createProduct = e => {
     e.preventDefault();
     navigate("/admin/product/create");
+  };
+
+  const createCategory = e => {
+    e.preventDefault();
+    navigate("/admin/category");
+  };
+  const showCategory = e => {
+    e.preventDefault();
+    navigate("/admin/category/show");
   };
   return (
     <>
@@ -46,6 +53,13 @@ export default function Dashboard() {
         <h3>Create Product</h3>
         <MDBBtn color="primary" onClick={createProduct}>
           Create
+        </MDBBtn>
+        <h3>Categorias</h3>
+        <MDBBtn color="primary" onClick={createCategory}>
+          Create
+        </MDBBtn>
+        <MDBBtn color="primary" onClick={showCategory}>
+          Ver Categorias
         </MDBBtn>
       </MDBContainer>
     </>
