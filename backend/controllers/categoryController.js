@@ -11,6 +11,18 @@ exports.getCategory = async (req, res, next) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+//Get Category by id
+exports.getCategoryById = async (req, res, next) => {
+  try {
+    const { categoryId } = req.params;
+    const category = await Category.findById(categoryId);
+    if (!category) {
+      return next(new HttpError("Collection not found", 404));
+    }
+    res.status(200).json({ success: true, category });
+  } catch (error) {}
+};
 //Create a collection
 exports.createCategory = async (req, res, next) => {
   const errors = validationResult(req);
