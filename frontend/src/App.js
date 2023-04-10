@@ -76,15 +76,19 @@ function Routing() {
           path="/admin/product/delete/:id"
           element={<DeleteProduct />}
         />
+        <Route exact path="/admin/category" element={<CreateCategory />} />
+        <Route exact path="/admin/category/show" element={<ShowCategory />} />
+        <Route
+          exact
+          path="/admin/category/edit/:id"
+          element={<EditCategory />}
+        />
+        <Route
+          exact
+          path="/admin/category/delete/:id"
+          element={<DeleteCategory />}
+        />
       </Route>
-      <Route exact path="/admin/category" element={<CreateCategory />} />
-      <Route exact path="/admin/category/show" element={<ShowCategory />} />
-      <Route exact path="/admin/category/edit/:id" element={<EditCategory />} />
-      <Route
-        exact
-        path="/admin/category/delete/:id"
-        element={<DeleteCategory />}
-      />
     </Routes>
   );
 }
